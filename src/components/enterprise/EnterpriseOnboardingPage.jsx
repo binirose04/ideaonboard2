@@ -1,9 +1,14 @@
 import { useEffect, useState } from "react";
-import { ENTERPRISE_MAX_VIDEO_VIEWS, ENTERPRISE_ONBOARDING_VIDEO_URL } from "../../config";
+import {
+  ENTERPRISE_AMA_SCHEDULER_URL,
+  ENTERPRISE_MAX_VIDEO_VIEWS,
+  ENTERPRISE_ONBOARDING_VIDEO_URL,
+} from "../../config";
 import { getEnterpriseVideoViews, saveEnterpriseVideoViews } from "../../utils/storage";
 import AppText from "../shared/AppText";
+import ExternalLink from "../shared/ExternalLink";
 
-export default function EnterpriseOnboardingPage({ openDrawer, setPage, userEmail }) {
+export default function EnterpriseOnboardingPage({ setPage, userEmail }) {
   const [videoViews, setVideoViews] = useState(() => getEnterpriseVideoViews(userEmail));
   const [hasCountedCurrentView, setHasCountedCurrentView] = useState(false);
 
@@ -47,8 +52,8 @@ export default function EnterpriseOnboardingPage({ openDrawer, setPage, userEmai
           />
           <AppText
             as="p"
-            en="Watch the recorded onboarding session first. Each registered workspace email is allowed three plays. Real enforcement still belongs in your backend, because localStorage is not Fort Knox."
-            ar="شاهد جلسة التأهيل المسجلة أولاً. يُسمح لكل بريد مسجل بثلاث مرات تشغيل."
+            en="Watch the assigned enterprise onboarding recording before scheduling a follow-up AMA. Each registered workspace email has limited playback access."
+            ar="شاهد تسجيل تأهيل المؤسسات المخصص قبل جدولة جلسة أسئلة ومتابعة. لكل بريد مساحة عمل مسجل وصول محدود للتشغيل."
           />
         </div>
 
@@ -78,8 +83,8 @@ export default function EnterpriseOnboardingPage({ openDrawer, setPage, userEmai
               />
               <AppText
                 as="p"
-                en="Use the AMA session if you need follow-up clarification. Frontend-only limits can be reset by users, so move this count to your OneDrive/n8n backend before going live."
-                ar="استخدم جلسة الأسئلة إذا كنت بحاجة إلى توضيح إضافي."
+                en="Schedule an enterprise AMA session for follow-up clarification or workflow-specific questions."
+                ar="قم بجدولة جلسة أسئلة للمؤسسات للحصول على توضيحات إضافية أو أسئلة خاصة بسير العمل."
               />
             </div>
           ) : (
@@ -101,17 +106,17 @@ export default function EnterpriseOnboardingPage({ openDrawer, setPage, userEmai
 
       <div className="final-session-panel enterprise-ama-panel">
         <div>
-          <AppText as="strong" en="Need help after the recording?" ar="هل تحتاج إلى مساعدة بعد التسجيل؟" />
+          <AppText as="strong" en="Enterprise AMA meeting" ar="جلسة أسئلة للمؤسسات" />
           <AppText
             as="p"
-            en="Use the AMA slot for questions, workflow blockers, model-specific doubts and follow-up clarification after watching the recorded onboarding session."
-            ar="استخدم جلسة الأسئلة والأجوبة للاستفسارات والعوائق والأسئلة الخاصة بالنماذج بعد مشاهدة جلسة التأهيل المسجلة."
+            en="Use the dedicated enterprise scheduler for model-specific questions, workflow blockers and post-recording clarification. This does not use the standard onboarding session calendar."
+            ar="استخدم أداة جدولة المؤسسات للأسئلة الخاصة بالنماذج وعوائق سير العمل والتوضيحات بعد مشاهدة التسجيل. هذا لا يستخدم تقويم جلسات التأهيل القياسية."
           />
         </div>
-        <button type="button" className="primary-action-btn" onClick={() => openDrawer({ type: "ama" })}>
-          <AppText en="Schedule AMA" ar="جدولة جلسة أسئلة" />
+        <ExternalLink href={ENTERPRISE_AMA_SCHEDULER_URL} className="primary-action-btn">
+          <AppText en="Open meeting scheduler" ar="فتح أداة الجدولة" />
           <i className="ph ph-calendar-check" />
-        </button>
+        </ExternalLink>
       </div>
     </section>
   );

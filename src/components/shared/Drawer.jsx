@@ -1,3 +1,4 @@
+import { ENTERPRISE_AMA_SCHEDULER_URL } from "../../config";
 import { BIM_GROUPS, BIM_TYPES, ONBOARDING_SESSIONS, PRE_ONBOARDING_TASKS } from "../../data/onboarding";
 import { formatSessionDate, parseLocalDate } from "../../utils/date";
 import AppText from "./AppText";
@@ -215,8 +216,8 @@ function ResourcesDrawer({ bimGroup, setBimGroup, bimType, setBimType, bimLink }
     <div className="drawer-section-stack">
       <p className="drawer-intro">
         <AppText
-          en="Useful links for setup and future work. Not required reading unless something is unclear. A rare sensible boundary."
-          ar="روابط مفيدة للتجهيز والعمل لاحقًا. ليست قراءة إلزامية إلا إذا كان هناك شيء غير واضح."
+          en="Useful links for setup, reference and future project work."
+          ar="روابط مفيدة للتجهيز والمراجع والعمل على المشاريع لاحقًا."
         />
       </p>
 
@@ -279,12 +280,16 @@ function ScheduleDrawer({
 
   const isAma = mode === "ama";
 
+  if (isAma) {
+    return <EnterpriseAMASchedulerDrawer />;
+  }
+
   return (
     <div className="drawer-section-stack">
       <p className="drawer-intro">
         <AppText
-          en={isAma ? "Choose an AMA slot after watching the recorded onboarding session. Bring specific model or workflow questions, not vague spiritual confusion." : "Pick the next suitable onboarding slot. Complete access checks before attending."}
-          ar={isAma ? "اختر موعد جلسة الأسئلة بعد مشاهدة التسجيل. جهز أسئلة محددة حول النموذج أو سير العمل." : "اختر الموعد المناسب. أكمل بنود الوصول قبل الحضور."}
+          en={isAma ? "Open the dedicated enterprise AMA scheduler after watching the recorded onboarding session." : "Pick the next suitable standard onboarding slot. Complete access checks before attending."}
+          ar={isAma ? "افتح أداة جدولة جلسة الأسئلة الخاصة بالمؤسسات بعد مشاهدة التسجيل." : "اختر موعد التأهيل القياسي المناسب. أكمل بنود الوصول قبل الحضور."}
         />
       </p>
 
@@ -335,6 +340,37 @@ function ScheduleDrawer({
           </article>
         ))}
       </section>
+    </div>
+  );
+}
+
+function EnterpriseAMASchedulerDrawer() {
+  return (
+    <div className="drawer-section-stack">
+      <p className="drawer-intro">
+        <AppText
+          en="Enterprise users should schedule follow-up questions through the dedicated meeting scheduler, not the standard onboarding calendar."
+          ar="يجب على مستخدمي المؤسسات جدولة أسئلة المتابعة من خلال أداة الجدولة المخصصة، وليس تقويم التأهيل القياسي."
+        />
+      </p>
+
+      <div className="meeting-scheduler-card">
+        <div className="meeting-scheduler-icon">
+          <i className="ph ph-calendar-check" />
+        </div>
+        <div>
+          <AppText as="h3" en="Enterprise AMA meeting" ar="جلسة أسئلة للمؤسسات" />
+          <AppText
+            as="p"
+            en="Use this for workflow blockers, project-specific model questions, recorded-session clarification and implementation follow-up."
+            ar="استخدم هذه الجلسة لعوائق سير العمل والأسئلة الخاصة بالنماذج وتوضيح التسجيل والمتابعة التنفيذية."
+          />
+        </div>
+        <ExternalLink href={ENTERPRISE_AMA_SCHEDULER_URL} className="download-btn drawer-full-width-btn">
+          <AppText en="Open meeting scheduler" ar="فتح أداة الجدولة" />
+          <i className="ph ph-arrow-right" />
+        </ExternalLink>
+      </div>
     </div>
   );
 }

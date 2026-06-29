@@ -1,19 +1,17 @@
-const EMAIL_CHECK_ENDPOINT =
-  import.meta.env.VITE_EMAIL_CHECK_ENDPOINT || "/api/check-onboarding-email";
-
-const GOOGLE_FORM_URL =
-  "https://docs.google.com/forms/d/e/1FAIpQLSfMbStwFSczyhFgcX8_QRBuoM5xcgW5mxIORjuhzXfj5o4OKQ/formResponse";
-
-const GOOGLE_FORM_EMAIL_ENTRY_ID = "entry.259862658";
+import { EMAIL_CHECK_API_URL, GOOGLE_FORM_EMAIL_ENTRY_ID, GOOGLE_FORM_URL } from "../config";
 
 export async function checkEmailAccess(email) {
+  const controller = new AbortController();
+  const timeoutId = window.setTimeout(() => controller.abort(), 12000);
+
   try {
-    const response = await fetch(EMAIL_CHECK_ENDPOINT, {
+    const response = await fetch(EMAIL_CHECK_API_URL, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ email }),
+      signal: controller.signal,
     });
 
     if (!response.ok) {
@@ -32,7 +30,9 @@ export async function checkEmailAccess(email) {
     };
   } catch (error) {
     console.error("Email access check failed:", error);
-    return { ok: false };
+    return { ok: false, failed: true };
+  } finally {
+    window.clearTimeout(timeoutId);
   }
 }
 

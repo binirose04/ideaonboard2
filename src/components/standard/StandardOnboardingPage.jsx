@@ -10,13 +10,13 @@ export default function StandardOnboardingPage({ openDrawer, setPage }) {
         </button>
       </div>
 
-      <div className="final-session-panel">
+      <div className="final-session-panel standard-session-panel">
         <div>
           <AppText as="strong" en="Live onboarding session" ar="جلسة التأهيل المباشرة" />
           <AppText
             as="p"
-            en="Choose a session after the setup checks are clear. If licence access is not ready, fix that before joining. Watching someone else use software is not training."
-            ar="اختر جلسة بعد إكمال بنود التجهيز. إذا لم يكن الوصول إلى الترخيص جاهزًا، عالج ذلك قبل الانضمام."
+            en="Choose a standard onboarding session after your licence and software access are ready. These sessions are for standard licence users only."
+            ar="اختر جلسة تأهيل قياسية بعد جاهزية الترخيص والوصول إلى البرنامج. هذه الجلسات مخصصة لمستخدمي الترخيص القياسي فقط."
           />
         </div>
         <button type="button" className="primary-action-btn" onClick={() => openDrawer({ type: "schedule" })}>

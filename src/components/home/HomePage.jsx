@@ -7,8 +7,8 @@ export default function HomePage({ openEmailGate, openDrawer }) {
       icon: "ph-users-three",
       labelEn: "Community",
       labelAr: "المجتمع",
-      copyEn: "Gulf user group, webinars and regional engineering updates.",
-      copyAr: "مجموعة المستخدمين الخليجية والندوات والتحديثات الهندسية الإقليمية.",
+      copyEn: "Regional user group, technical updates and webinar announcements.",
+      copyAr: "مجموعة المستخدمين الإقليمية والتحديثات الفنية وإعلانات الندوات.",
     },
     {
       type: "licence",
@@ -23,7 +23,7 @@ export default function HomePage({ openEmailGate, openDrawer }) {
       icon: "ph-books",
       labelEn: "Resources",
       labelAr: "المراجع",
-      copyEn: "Support centre, viewer, connection library and BIM links.",
+      copyEn: "Support Center, Viewer, Connection Library and BIM links.",
       copyAr: "مركز الدعم والعارض ومكتبة الوصلات وروابط BIM.",
     },
   ];
@@ -34,19 +34,19 @@ export default function HomePage({ openEmailGate, openDrawer }) {
         <div className="home-hero-copy">
           <div className="roadmap-eyebrow">
             <i className="ph-fill ph-handshake" />
-            <AppText en="Structured onboarding" ar="التأهيل المنظم" />
+            <AppText en="GSD IDEA onboarding" ar="تأهيل GSD IDEA" />
           </div>
 
           <AppText
             as="h1"
-            en="Welcome to IDEA StatiCa Onboarding"
-            ar="مرحبًا بكم في تأهيل IDEA StatiCa"
+            en="Start working with IDEA StatiCa"
+            ar="ابدأ العمل مع IDEA StatiCa"
           />
 
           <AppText
             as="p"
-            en="A short setup path for structural engineers who need to get working, not browse five tabs before touching the software."
-            ar="مسار تجهيز مختصر للمهندسين الإنشائيين الذين يريدون البدء بالعمل دون التنقل بين عدة تبويبات."
+            en="A focused onboarding path for structural engineers: verify access, open the right workspace, and continue with the training route assigned to your licence type."
+            ar="مسار تأهيل واضح للمهندسين الإنشائيين: تحقق من الوصول، وافتح مساحة العمل الصحيحة، وتابع مسار التدريب المخصص لنوع الترخيص."
           />
 
           <div className="home-action-row">
@@ -59,12 +59,12 @@ export default function HomePage({ openEmailGate, openDrawer }) {
 
         <aside className="home-support-panel" aria-label="Supporting setup information">
           <div className="home-support-panel-header">
-            <AppText as="span" className="support-panel-kicker" en="Before the session" ar="قبل الجلسة" />
+            <AppText as="span" className="support-panel-kicker" en="Quick access" ar="وصول سريع" />
             <AppText as="strong" en="Open only what you need" ar="افتح ما تحتاجه فقط" />
             <AppText
               as="p"
-              en="Community, licence and reference links are kept here as clean drawer actions instead of crowding the onboarding path."
-              ar="تم وضع المجتمع والترخيص والمراجع هنا كإجراءات جانبية واضحة بدل ازدحام مسار التأهيل."
+              en="Community, licence and reference links are available as focused drawer actions, keeping the onboarding path clear."
+              ar="المجتمع والترخيص والمراجع متاحة كإجراءات جانبية واضحة للحفاظ على مسار التأهيل منظمًا."
             />
           </div>
 
