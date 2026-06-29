@@ -1,23 +1,18 @@
-export default async function handler(request) {
-  if (request.method !== "POST") {
-    return new Response(
-      JSON.stringify({ ok: false, error: "Method not allowed" }),
-      {
-        status: 405,
-        headers: { "Content-Type": "application/json" },
-      },
-    );
+module.exports = async function handler(req, res) {
+  if (req.method !== "POST") {
+    return res.status(405).json({
+      ok: false,
+      error: "Method not allowed",
+    });
   }
 
   try {
-    const body = await request.json();
-    const inputEmail = String(body.email || "").trim().toLowerCase();
+    const inputEmail = String(req.body?.email || "")
+      .trim()
+      .toLowerCase();
 
     if (!inputEmail || !inputEmail.includes("@")) {
-      return new Response(JSON.stringify({ ok: false }), {
-        status: 400,
-        headers: { "Content-Type": "application/json" },
-      });
+      return res.status(400).json({ ok: false });
     }
 
     const usersRaw = process.env.ONBOARDING_EMAIL_USERS || "{}";
@@ -26,32 +21,19 @@ export default async function handler(request) {
     const flow = users[inputEmail];
 
     if (!["standard", "enterprise"].includes(flow)) {
-      return new Response(JSON.stringify({ ok: false }), {
-        status: 200,
-        headers: { "Content-Type": "application/json" },
-      });
+      return res.status(200).json({ ok: false });
     }
 
-    return new Response(
-      JSON.stringify({
-        ok: true,
-        flow,
-      }),
-      {
-        status: 200,
-        headers: { "Content-Type": "application/json" },
-      },
-    );
+    return res.status(200).json({
+      ok: true,
+      flow,
+    });
   } catch (error) {
-    return new Response(
-      JSON.stringify({
-        ok: false,
-        error: "Email check failed",
-      }),
-      {
-        status: 500,
-        headers: { "Content-Type": "application/json" },
-      },
-    );
+    console.error("Email check failed:", error);
+
+    return res.status(500).json({
+      ok: false,
+      error: "Email check failed",
+    });
   }
-}
+};
