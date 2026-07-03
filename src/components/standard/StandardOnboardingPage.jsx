@@ -48,7 +48,7 @@ export default function StandardOnboardingPage({ openDrawer, setPage, userEmail 
           </div>
           <AppText
             as="h1"
-            en="Recorded onboarding session"
+            en="Onboarding session"
             ar="جلسة التأهيل المسجلة"
           />
           <AppText
@@ -98,6 +98,26 @@ export default function StandardOnboardingPage({ openDrawer, setPage, userEmail 
                 <span className="lang-ar">{activeVideo.labelAr}</span>
               </strong>
             </div>
+
+            <div className="final-session-panel video-action-panel standard-session-panel">
+              <div>
+                <AppText as="strong" en="Live onboarding session" ar="جلسة التأهيل المباشرة" />
+                <AppText
+                  as="p"
+                  en="Choose a standard onboarding session after your licence and software access are ready. These sessions are for standard licence users only."
+                  ar="اختر جلسة تأهيل قياسية بعد جاهزية الترخيص والوصول إلى البرنامج. هذه الجلسات مخصصة لمستخدمي الترخيص القياسي فقط."
+                />
+              </div>
+              <button
+                type="button"
+                className="primary-action-btn"
+                disabled={!canBookLiveQna}
+                onClick={() => openDrawer({ type: "schedule" })}
+              >
+                <AppText en="Book live QnA Session" ar="حجز جلسة أسئلة مباشرة" />
+                <i className="ph ph-calendar-check" />
+              </button>
+            </div>
           </div>
 
           <aside className="video-watch-sidebar" aria-label="Standard onboarding playlist">
@@ -143,26 +163,6 @@ export default function StandardOnboardingPage({ openDrawer, setPage, userEmail 
           </aside>
         </div>
       </section>
-
-      <div className="final-session-panel standard-session-panel">
-        <div>
-          <AppText as="strong" en="Live onboarding session" ar="جلسة التأهيل المباشرة" />
-          <AppText
-            as="p"
-            en="Choose a standard onboarding session after your licence and software access are ready. These sessions are for standard licence users only."
-            ar="اختر جلسة تأهيل قياسية بعد جاهزية الترخيص والوصول إلى البرنامج. هذه الجلسات مخصصة لمستخدمي الترخيص القياسي فقط."
-          />
-        </div>
-        <button
-          type="button"
-          className="primary-action-btn"
-          disabled={!canBookLiveQna}
-          onClick={() => openDrawer({ type: "schedule" })}
-        >
-          <AppText en="Book live QnA Session" ar="حجز جلسة أسئلة مباشرة" />
-          <i className="ph ph-calendar-check" />
-        </button>
-      </div>
     </section>
   );
 }

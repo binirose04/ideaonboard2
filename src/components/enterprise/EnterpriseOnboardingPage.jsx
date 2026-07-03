@@ -50,7 +50,7 @@ export default function EnterpriseOnboardingPage({ setPage, userEmail }) {
           </div>
           <AppText
             as="h1"
-            en="Recorded onboarding session"
+            en="Onboarding sessions"
             ar="جلسة التأهيل المسجلة"
           />
           <AppText
@@ -100,6 +100,28 @@ export default function EnterpriseOnboardingPage({ setPage, userEmail }) {
                 <span className="lang-ar">{activeVideo.labelAr}</span>
               </strong>
             </div>
+
+            <div className="final-session-panel video-action-panel enterprise-ama-panel">
+              <div>
+                <AppText as="strong" en="Enterprise AMA meeting" ar="جلسة أسئلة للمؤسسات" />
+                <AppText
+                  as="p"
+                  en="Use the dedicated enterprise scheduler for model-specific questions, workflow blockers and post-recording clarification. This does not use the standard onboarding session calendar."
+                  ar="استخدم أداة جدولة المؤسسات للأسئلة الخاصة بالنماذج وعوائق سير العمل والتوضيحات بعد مشاهدة التسجيل. هذا لا يستخدم تقويم جلسات التأهيل القياسية."
+                />
+              </div>
+              {canBookLiveQna ? (
+                <ExternalLink href={ENTERPRISE_AMA_SCHEDULER_URL} className="primary-action-btn">
+                  <AppText en="Book live QnA Session" ar="حجز جلسة أسئلة مباشرة" />
+                  <i className="ph ph-calendar-check" />
+                </ExternalLink>
+              ) : (
+                <button type="button" className="primary-action-btn" disabled>
+                  <AppText en="Book live QnA Session" ar="حجز جلسة أسئلة مباشرة" />
+                  <i className="ph ph-calendar-check" />
+                </button>
+              )}
+            </div>
           </div>
 
           <aside className="video-watch-sidebar" aria-label="Enterprise onboarding playlist">
@@ -145,28 +167,6 @@ export default function EnterpriseOnboardingPage({ setPage, userEmail }) {
           </aside>
         </div>
       </section>
-
-      <div className="final-session-panel enterprise-ama-panel">
-        <div>
-          <AppText as="strong" en="Enterprise AMA meeting" ar="جلسة أسئلة للمؤسسات" />
-          <AppText
-            as="p"
-            en="Use the dedicated enterprise scheduler for model-specific questions, workflow blockers and post-recording clarification. This does not use the standard onboarding session calendar."
-            ar="استخدم أداة جدولة المؤسسات للأسئلة الخاصة بالنماذج وعوائق سير العمل والتوضيحات بعد مشاهدة التسجيل. هذا لا يستخدم تقويم جلسات التأهيل القياسية."
-          />
-        </div>
-        {canBookLiveQna ? (
-          <ExternalLink href={ENTERPRISE_AMA_SCHEDULER_URL} className="primary-action-btn">
-            <AppText en="Book live QnA Session" ar="حجز جلسة أسئلة مباشرة" />
-            <i className="ph ph-calendar-check" />
-          </ExternalLink>
-        ) : (
-          <button type="button" className="primary-action-btn" disabled>
-            <AppText en="Book live QnA Session" ar="حجز جلسة أسئلة مباشرة" />
-            <i className="ph ph-calendar-check" />
-          </button>
-        )}
-      </div>
     </section>
   );
 }
