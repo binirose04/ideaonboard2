@@ -1,6 +1,12 @@
 import AppText from "../shared/AppText";
 
 export default function HomePage({ openEmailGate, openDrawer }) {
+  const sessionBoxes = [
+    { en: "Detailed Steel Session", ar: "جلسة الصلب التفصيلية" },
+    { en: "Detailed Concrete Session", ar: "جلسة الخرسانة التفصيلية" },
+    { en: "BIM Workflow Session", ar: "جلسة سير عمل BIM" },
+  ];
+
   const supportCards = [
     {
       type: "community",
@@ -50,6 +56,12 @@ export default function HomePage({ openEmailGate, openDrawer }) {
             en="Start working with IDEA StatiCa"
             ar="ابدأ العمل مع IDEA StatiCa"
           />
+
+          <div className="home-session-box-row" aria-label="Onboarding session coverage">
+            {sessionBoxes.map((box) => (
+              <AppText key={box.en} as="span" en={box.en} ar={box.ar} />
+            ))}
+          </div>
 
           <AppText
             as="p"

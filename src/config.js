@@ -15,10 +15,50 @@ export const EMAIL_CHECK_API_URL =
 export const ENTERPRISE_ONBOARDING_VIDEO_URL =
   import.meta.env.VITE_ENTERPRISE_ONBOARDING_VIDEO_URL || "/assets/enterprise-onboarding.mp4";
 export const ENTERPRISE_MAX_VIDEO_VIEWS = 3;
+export const ENTERPRISE_ONBOARDING_VIDEO_TABS = [
+  {
+    id: "steel",
+    labelEn: "Detailed Steel",
+    labelAr: "الصلب التفصيلي",
+    url: import.meta.env.VITE_ENTERPRISE_STEEL_VIDEO_URL || ENTERPRISE_ONBOARDING_VIDEO_URL,
+  },
+  {
+    id: "concrete",
+    labelEn: "Detailed Concrete",
+    labelAr: "الخرسانة التفصيلية",
+    url: import.meta.env.VITE_ENTERPRISE_CONCRETE_VIDEO_URL || ENTERPRISE_ONBOARDING_VIDEO_URL,
+  },
+  {
+    id: "bim",
+    labelEn: "BIM Workflow",
+    labelAr: "سير عمل BIM",
+    url: import.meta.env.VITE_ENTERPRISE_BIM_VIDEO_URL || ENTERPRISE_ONBOARDING_VIDEO_URL,
+  },
+];
 
 export const STANDARD_ONBOARDING_VIDEO_URL =
   import.meta.env.VITE_STANDARD_ONBOARDING_VIDEO_URL || "/assets/standard-onboarding.mp4";
 export const STANDARD_MAX_VIDEO_VIEWS = 1;
+export const STANDARD_ONBOARDING_VIDEO_TABS = [
+  {
+    id: "steel",
+    labelEn: "Detailed Steel",
+    labelAr: "الصلب التفصيلي",
+    url: import.meta.env.VITE_STANDARD_STEEL_VIDEO_URL || STANDARD_ONBOARDING_VIDEO_URL,
+  },
+  {
+    id: "concrete",
+    labelEn: "Detailed Concrete",
+    labelAr: "الخرسانة التفصيلية",
+    url: import.meta.env.VITE_STANDARD_CONCRETE_VIDEO_URL || STANDARD_ONBOARDING_VIDEO_URL,
+  },
+  {
+    id: "bim",
+    labelEn: "BIM Workflow",
+    labelAr: "سير عمل BIM",
+    url: import.meta.env.VITE_STANDARD_BIM_VIDEO_URL || STANDARD_ONBOARDING_VIDEO_URL,
+  },
+];
 
 export const ENTERPRISE_AMA_SCHEDULER_URL =
   import.meta.env.VITE_ENTERPRISE_AMA_SCHEDULER_URL ||

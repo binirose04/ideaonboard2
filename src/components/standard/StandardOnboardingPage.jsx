@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import {
   STANDARD_MAX_VIDEO_VIEWS,
-  STANDARD_ONBOARDING_VIDEO_URL,
+  STANDARD_ONBOARDING_VIDEO_TABS,
 } from "../../config";
 import { getStandardVideoViews, saveStandardVideoViews } from "../../utils/storage";
 import AppText from "../shared/AppText";
@@ -9,6 +9,7 @@ import AppText from "../shared/AppText";
 export default function StandardOnboardingPage({ openDrawer, setPage, userEmail }) {
   const [videoViews, setVideoViews] = useState(() => getStandardVideoViews(userEmail));
   const [hasCountedCurrentView, setHasCountedCurrentView] = useState(false);
+  const [activeVideoId, setActiveVideoId] = useState(STANDARD_ONBOARDING_VIDEO_TABS[0].id);
 
   useEffect(() => {
     setVideoViews(getStandardVideoViews(userEmail));
@@ -17,7 +18,8 @@ export default function StandardOnboardingPage({ openDrawer, setPage, userEmail 
 
   const usedViews = Math.min(videoViews, STANDARD_MAX_VIDEO_VIEWS);
   const remainingViews = Math.max(STANDARD_MAX_VIDEO_VIEWS - usedViews, 0);
-  const isVideoLocked = remainingViews <= 0;
+  const isVideoLocked = remainingViews <= 0 && !hasCountedCurrentView;
+  const activeVideo = STANDARD_ONBOARDING_VIDEO_TABS.find((video) => video.id === activeVideoId) || STANDARD_ONBOARDING_VIDEO_TABS[0];
 
   function handleVideoPlay() {
     if (hasCountedCurrentView || isVideoLocked) return;
@@ -70,6 +72,22 @@ export default function StandardOnboardingPage({ openDrawer, setPage, userEmail 
           </div>
         </div>
 
+        <div className="onboarding-video-tabs" role="tablist" aria-label="Standard onboarding videos">
+          {STANDARD_ONBOARDING_VIDEO_TABS.map((video) => (
+            <button
+              key={video.id}
+              type="button"
+              role="tab"
+              aria-selected={activeVideo.id === video.id}
+              className={`onboarding-video-tab ${activeVideo.id === video.id ? "active" : ""}`}
+              onClick={() => setActiveVideoId(video.id)}
+            >
+              <span className="lang-en">{video.labelEn}</span>
+              <span className="lang-ar">{video.labelAr}</span>
+            </button>
+          ))}
+        </div>
+
         <div className="enterprise-video-shell">
           {isVideoLocked ? (
             <div className="enterprise-video-locked">
@@ -87,10 +105,11 @@ export default function StandardOnboardingPage({ openDrawer, setPage, userEmail 
             </div>
           ) : (
             <video
+              key={activeVideo.id}
               className="enterprise-video-player"
               controls
               preload="metadata"
-              src={STANDARD_ONBOARDING_VIDEO_URL}
+              src={activeVideo.url}
               onPlay={handleVideoPlay}
             >
               <AppText
