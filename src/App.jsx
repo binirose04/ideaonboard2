@@ -35,20 +35,13 @@ export default function App() {
   const [emailStatus, setEmailStatus] = useState("idle");
   const [userFlow, setUserFlow] = useState(getInitialUserFlow);
   const [calendarMonth, setCalendarMonth] = useState(getInitialCalendarMonth);
-  const [bimGroup, setBimGroup] = useState(getSavedProgress().bimGroup || "");
+  const [bimGroup, setBimGroup] = useState(getSavedProgress().bimGroup || "all");
   const [bimType, setBimType] = useState(getSavedProgress().bimType || "");
   const [embedMode] = useState(getInitialEmbedMode);
 
   const sessionsByDate = useMemo(() => new Map(ONBOARDING_SESSIONS.map((session) => [session.date, session])), []);
   const calendarDays = useMemo(() => getMonthDays(calendarMonth), [calendarMonth]);
   const monthLabel = formatMonthLabel(calendarMonth, lang);
-  const bimLink = useMemo(() => {
-    const params = new URLSearchParams();
-    if (bimType) params.set("type", bimType);
-    if (bimGroup) params.set("group", bimGroup);
-    const query = params.toString();
-    return `https://www.ideastatica.com/bim-integrations${query ? `?${query}` : ""}`;
-  }, [bimGroup, bimType]);
 
   useEffect(() => {
     document.documentElement.lang = lang;
@@ -175,7 +168,7 @@ export default function App() {
             ) : userFlow === USER_FLOW.ENTERPRISE ? (
               <EnterpriseOnboardingPage openDrawer={setDrawer} setPage={setPage} userEmail={emailValue} />
             ) : (
-              <StandardOnboardingPage openDrawer={setDrawer} setPage={setPage} />
+              <StandardOnboardingPage openDrawer={setDrawer} setPage={setPage} userEmail={emailValue} />
             )}
           </main>
         </div>
@@ -189,7 +182,6 @@ export default function App() {
         setBimGroup={setBimGroup}
         bimType={bimType}
         setBimType={setBimType}
-        bimLink={bimLink}
         calendarMonth={calendarMonth}
         monthLabel={monthLabel}
         focusScheduleMonth={focusScheduleMonth}

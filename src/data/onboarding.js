@@ -140,18 +140,141 @@ export const PRE_ONBOARDING_TASKS = [
 ];
 
 export const BIM_GROUPS = [
+  { value: "all", labelEn: "All", labelAr: "الكل" },
   { value: "cad", labelEn: "CAD", labelAr: "CAD" },
   { value: "fea", labelEn: "FEA", labelAr: "FEA" },
-  { value: "bim", labelEn: "BIM", labelAr: "BIM" },
 ];
 
-export const BIM_TYPES = [
-  "Tekla Structures",
-  "Autodesk Revit",
-  "SAP2000",
-  "ETABS",
-  "STAAD.Pro",
-  "Robot Structural Analysis",
-  "RFEM",
-  "SCIA Engineer",
+export const BIM_MATERIALS = [
+  { value: "all", labelEn: "All", labelAr: "الكل" },
+  { value: "Steel", labelEn: "Steel", labelAr: "صلب" },
+  { value: "Concrete", labelEn: "Concrete", labelAr: "خرسانة" },
 ];
+
+export const BIM_INTEGRATIONS = [
+  {
+    value: "tekla-structures",
+    label: "Tekla Structures",
+    material: "Steel",
+    softwareType: "cad",
+    href: "https://www.ideastatica.com/bim-links/supported-integrations/tekla-structures",
+  },
+  {
+    value: "sap2000steel",
+    label: "SAP2000 - Steel",
+    material: "Steel",
+    softwareType: "fea",
+    href: "https://www.ideastatica.com/bim-links/supported-integrations/sap2000steel",
+  },
+  {
+    value: "sap2000concrete",
+    label: "SAP2000 - Concrete",
+    material: "Concrete",
+    softwareType: "fea",
+    href: "https://www.ideastatica.com/bim-links/supported-integrations/sap2000concrete",
+  },
+  {
+    value: "revit",
+    label: "Revit",
+    aliases: ["Autodesk Revit"],
+    material: "Steel",
+    softwareType: "cad",
+    href: "https://www.ideastatica.com/bim-links/supported-integrations/revit",
+  },
+  {
+    value: "advance-steel",
+    label: "Advance Steel",
+    material: "Steel",
+    softwareType: "cad",
+    href: "https://www.ideastatica.com/bim-links/supported-integrations/advance-steel",
+  },
+  {
+    value: "masterseries",
+    label: "MasterSeries",
+    material: "Steel",
+    softwareType: "fea",
+    href: "https://www.ideastatica.com/bim-links/supported-integrations/masterseries",
+  },
+  {
+    value: "etabs-steel",
+    label: "ETABS - Steel",
+    aliases: ["ETABS"],
+    material: "Steel",
+    softwareType: "fea",
+    href: "https://www.ideastatica.com/bim-links/supported-integrations/etabs-steel",
+  },
+  {
+    value: "etabsconcrete",
+    label: "ETABS - Concrete",
+    material: "Concrete",
+    softwareType: "fea",
+    href: "https://www.ideastatica.com/bim-links/supported-integrations/etabsconcrete",
+  },
+  {
+    value: "robot-structural-analysis-professional-steel",
+    label: "Robot Structural Analysis Professional - Steel",
+    aliases: ["Robot Structural Analysis"],
+    material: "Steel",
+    softwareType: "fea",
+    href: "https://www.ideastatica.com/bim-links/supported-integrations/robot-structural-analysis-professional-steel",
+  },
+  {
+    value: "robot-structural-analysis-professional",
+    label: "Robot Structural Analysis Professional - Concrete",
+    material: "Concrete",
+    softwareType: "fea",
+    href: "https://www.ideastatica.com/bim-links/supported-integrations/robot-structural-analysis-professional",
+  },
+  {
+    value: "tekla-structural-designer",
+    label: "Tekla Structural Designer",
+    material: "Steel",
+    softwareType: "fea",
+    href: "https://www.ideastatica.com/bim-links/supported-integrations/tekla-structural-designer",
+  },
+  {
+    value: "fem-design",
+    label: "FEM-Design",
+    material: "Steel",
+    softwareType: "fea",
+    href: "https://www.ideastatica.com/bim-links/supported-integrations/fem-design",
+  },
+  {
+    value: "skyciv",
+    label: "SkyCiv",
+    material: "Steel",
+    softwareType: "fea",
+    href: "https://www.ideastatica.com/bim-links/supported-integrations/skyciv",
+  },
+  {
+    value: "prokon_sumo",
+    label: "Prokon Sumo",
+    material: "Steel",
+    softwareType: "fea",
+    href: "https://www.ideastatica.com/bim-links/supported-integrations/prokon_sumo",
+  },
+  {
+    value: "pro-sap",
+    label: "PRO_SAP",
+    material: "Steel",
+    softwareType: "fea",
+    href: "https://www.ideastatica.com/bim-links/supported-integrations/pro-sap",
+  },
+  {
+    value: "sismicad",
+    label: "Sismicad",
+    material: "Steel",
+    softwareType: "fea",
+    href: "https://www.ideastatica.com/bim-links/supported-integrations/sismicad",
+  },
+];
+
+export function getBimIntegrationByValue(value) {
+  if (!value) return null;
+
+  return BIM_INTEGRATIONS.find((integration) => (
+    integration.value === value
+    || integration.label === value
+    || integration.aliases?.includes(value)
+  )) || null;
+}

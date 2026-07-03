@@ -7,13 +7,13 @@ export default function HomePage({ openEmailGate, openDrawer }) {
       icon: "ph-users-three",
       labelEn: "Community",
       labelAr: "المجتمع",
-      copyEn: "Regional user group, technical updates and webinar announcements.",
+      copyEn: "Technical updates and webinar announcements.",
       copyAr: "مجموعة المستخدمين الإقليمية والتحديثات الفنية وإعلانات الندوات.",
     },
     {
       type: "licence",
       icon: "ph-stack",
-      labelEn: "Licence setup",
+      labelEn: "Setup",
       labelAr: "إعداد الترخيص",
       copyEn: "Admin access, user creation and activation guidance.",
       copyAr: "وصول المسؤول وإنشاء المستخدمين وإرشادات التفعيل.",
@@ -23,8 +23,16 @@ export default function HomePage({ openEmailGate, openDrawer }) {
       icon: "ph-books",
       labelEn: "Resources",
       labelAr: "المراجع",
-      copyEn: "Support Center, Viewer, Connection Library and BIM links.",
-      copyAr: "مركز الدعم والعارض ومكتبة الوصلات وروابط BIM.",
+      copyEn: "Support Center, Viewer and Connection Library.",
+      copyAr: "مركز الدعم والعارض ومكتبة الوصلات.",
+    },
+    {
+      type: "integrations",
+      icon: "ph-plugs-connected",
+      labelEn: "Integrations",
+      labelAr: "التكاملات",
+      copyEn: "Find the exact CAD or FEA integration page.",
+      copyAr: "ابحث عن صفحة تكامل CAD أو FEA المناسبة.",
     },
   ];
 
@@ -83,7 +91,10 @@ export default function HomePage({ openEmailGate, openDrawer }) {
                   <AppText as="strong" en={card.labelEn} ar={card.labelAr} />
                   <AppText as="span" en={card.copyEn} ar={card.copyAr} />
                 </span>
-                <i className="ph ph-arrow-up-right home-support-arrow" />
+                <span className="home-support-action">
+                  <AppText en="Open" ar="فتح" />
+                  <i className="ph ph-arrow-right" />
+                </span>
               </button>
             ))}
           </div>

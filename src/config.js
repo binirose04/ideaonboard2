@@ -16,6 +16,10 @@ export const ENTERPRISE_ONBOARDING_VIDEO_URL =
   import.meta.env.VITE_ENTERPRISE_ONBOARDING_VIDEO_URL || "/assets/enterprise-onboarding.mp4";
 export const ENTERPRISE_MAX_VIDEO_VIEWS = 3;
 
+export const STANDARD_ONBOARDING_VIDEO_URL =
+  import.meta.env.VITE_STANDARD_ONBOARDING_VIDEO_URL || "/assets/standard-onboarding.mp4";
+export const STANDARD_MAX_VIDEO_VIEWS = 1;
+
 export const ENTERPRISE_AMA_SCHEDULER_URL =
   import.meta.env.VITE_ENTERPRISE_AMA_SCHEDULER_URL ||
   "mailto:support@gsdidea.ae?subject=Enterprise%20AMA%20Session%20Request";

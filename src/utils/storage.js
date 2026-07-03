@@ -1,4 +1,4 @@
-import { ENTERPRISE_MAX_VIDEO_VIEWS, STORAGE_KEY, USER_FLOW } from "../config";
+import { ENTERPRISE_MAX_VIDEO_VIEWS, STANDARD_MAX_VIDEO_VIEWS, STORAGE_KEY, USER_FLOW } from "../config";
 
 export function getSavedProgress() {
   if (typeof window === "undefined") return {};
@@ -88,5 +88,28 @@ export function saveEnterpriseVideoViews(emailAddress, count) {
   window.localStorage.setItem(
     getEnterpriseVideoViewKey(emailAddress),
     String(Math.min(Math.max(count, 0), ENTERPRISE_MAX_VIDEO_VIEWS)),
+  );
+}
+
+export function getStandardVideoViewKey(emailAddress) {
+  const normalizedEmail = normalizeEmail(emailAddress);
+  return `${STORAGE_KEY}:standard-video-views:${normalizedEmail || "anonymous"}`;
+}
+
+export function getStandardVideoViews(emailAddress) {
+  if (typeof window === "undefined") return 0;
+
+  const rawValue = window.localStorage.getItem(getStandardVideoViewKey(emailAddress));
+  const parsedValue = Number.parseInt(rawValue || "0", 10);
+
+  return Number.isFinite(parsedValue) && parsedValue > 0 ? parsedValue : 0;
+}
+
+export function saveStandardVideoViews(emailAddress, count) {
+  if (typeof window === "undefined") return;
+
+  window.localStorage.setItem(
+    getStandardVideoViewKey(emailAddress),
+    String(Math.min(Math.max(count, 0), STANDARD_MAX_VIDEO_VIEWS)),
   );
 }
