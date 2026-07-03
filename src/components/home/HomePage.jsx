@@ -2,9 +2,9 @@ import AppText from "../shared/AppText";
 
 export default function HomePage({ openEmailGate, openDrawer }) {
   const sessionBoxes = [
-    { en: "Detailed Steel Session", ar: "جلسة الصلب التفصيلية" },
-    { en: "Detailed Concrete Session", ar: "جلسة الخرسانة التفصيلية" },
-    { en: "BIM Workflow Session", ar: "جلسة سير عمل BIM" },
+    { en: "BIM Workflows", ar: "سير عمل BIM" },
+    { en: "Steel Onboarding Sessions", ar: "جلسات تأهيل الصلب" },
+    { en: "Concrete Onboarding Sessions", ar: "جلسات تأهيل الخرسانة" },
   ];
 
   const supportCards = [
@@ -51,17 +51,14 @@ export default function HomePage({ openEmailGate, openDrawer }) {
             <AppText en="GSD IDEA onboarding" ar="تأهيل GSD IDEA" />
           </div>
 
-          <AppText
-            as="h1"
-            en="Start working with IDEA StatiCa"
-            ar="ابدأ العمل مع IDEA StatiCa"
-          />
-
-          <div className="home-session-box-row" aria-label="Onboarding session coverage">
-            {sessionBoxes.map((box) => (
-              <AppText key={box.en} as="span" en={box.en} ar={box.ar} />
-            ))}
-          </div>
+          <h1 className="home-title">
+            <span className="lang-en">
+              Start working with <span className="home-title-brand">IDEA StatiCa</span>
+            </span>
+            <span className="lang-ar">
+              ابدأ العمل مع <span className="home-title-brand">IDEA StatiCa</span>
+            </span>
+          </h1>
 
           <AppText
             as="p"
@@ -75,12 +72,18 @@ export default function HomePage({ openEmailGate, openDrawer }) {
               <i className="ph ph-arrow-right" />
             </button>
           </div>
+
+          <div className="home-session-box-row" aria-label="Onboarding session coverage">
+            {sessionBoxes.map((box) => (
+              <AppText key={box.en} as="span" en={box.en} ar={box.ar} />
+            ))}
+          </div>
         </div>
 
         <aside className="home-support-panel" aria-label="Supporting setup information">
           <div className="home-support-panel-header">
             <AppText as="span" className="support-panel-kicker" en="Quick access" ar="وصول سريع" />
-            <AppText as="strong" en="Open only what you need" ar="افتح ما تحتاجه فقط" />
+            <AppText as="strong" en="All that you'd need." ar="افتح ما تحتاجه فقط" />
             <AppText
               as="p"
               en="Community, licence and reference links are available as focused drawer actions, keeping the onboarding path clear."

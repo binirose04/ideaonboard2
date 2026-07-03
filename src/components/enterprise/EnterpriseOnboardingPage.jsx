@@ -21,6 +21,7 @@ export default function EnterpriseOnboardingPage({ setPage, userEmail }) {
   const usedViews = Math.min(videoViews, ENTERPRISE_MAX_VIDEO_VIEWS);
   const remainingViews = Math.max(ENTERPRISE_MAX_VIDEO_VIEWS - usedViews, 0);
   const isVideoLocked = remainingViews <= 0 && !hasCountedCurrentView;
+  const canBookLiveQna = usedViews > 0 || hasCountedCurrentView;
   const activeVideo = ENTERPRISE_ONBOARDING_VIDEO_TABS.find((video) => video.id === activeVideoId) || ENTERPRISE_ONBOARDING_VIDEO_TABS[0];
 
   function handleVideoPlay() {
@@ -41,7 +42,7 @@ export default function EnterpriseOnboardingPage({ setPage, userEmail }) {
         </button>
       </div>
 
-      <section className="enterprise-video-card">
+      <section className="enterprise-video-card video-watch-page">
         <div className="enterprise-video-copy">
           <div className="roadmap-eyebrow">
             <i className="ph-fill ph-play-circle" />
@@ -59,67 +60,89 @@ export default function EnterpriseOnboardingPage({ setPage, userEmail }) {
           />
         </div>
 
-        <div className="enterprise-video-meta-grid">
-          <div className="enterprise-video-meta-cell">
-            <b>{remainingViews}</b>
-            <AppText as="span" en="Views left" ar="مشاهدات متبقية" />
-          </div>
-          <div className="enterprise-video-meta-cell">
-            <b>{ENTERPRISE_MAX_VIDEO_VIEWS}</b>
-            <AppText as="span" en="Allowed plays" ar="مرات التشغيل" />
-          </div>
-          <div className="enterprise-video-meta-cell">
-            <b>{isVideoLocked ? "LOCKED" : "OPEN"}</b>
-            <AppText as="span" en="Video access" ar="وصول الفيديو" />
-          </div>
-        </div>
-
-        <div className="onboarding-video-tabs" role="tablist" aria-label="Enterprise onboarding videos">
-          {ENTERPRISE_ONBOARDING_VIDEO_TABS.map((video) => (
-            <button
-              key={video.id}
-              type="button"
-              role="tab"
-              aria-selected={activeVideo.id === video.id}
-              className={`onboarding-video-tab ${activeVideo.id === video.id ? "active" : ""}`}
-              onClick={() => setActiveVideoId(video.id)}
-            >
-              <span className="lang-en">{video.labelEn}</span>
-              <span className="lang-ar">{video.labelAr}</span>
-            </button>
-          ))}
-        </div>
-
-        <div className="enterprise-video-shell">
-          {isVideoLocked ? (
-            <div className="enterprise-video-locked">
-              <i className="ph ph-lock-key" />
-              <AppText
-                as="strong"
-                en="Video view limit reached"
-                ar="تم الوصول إلى حد المشاهدة"
-              />
-              <AppText
-                as="p"
-                en="Schedule an enterprise AMA session for follow-up clarification or workflow-specific questions."
-                ar="قم بجدولة جلسة أسئلة للمؤسسات للحصول على توضيحات إضافية أو أسئلة خاصة بسير العمل."
-              />
+        <div className="video-watch-layout">
+          <div className="video-watch-main">
+            <div className="enterprise-video-shell">
+              {isVideoLocked ? (
+                <div className="enterprise-video-locked">
+                  <i className="ph ph-lock-key" />
+                  <AppText
+                    as="strong"
+                    en="Video view limit reached"
+                    ar="تم الوصول إلى حد المشاهدة"
+                  />
+                  <AppText
+                    as="p"
+                    en="Schedule an enterprise AMA session for follow-up clarification or workflow-specific questions."
+                    ar="قم بجدولة جلسة أسئلة للمؤسسات للحصول على توضيحات إضافية أو أسئلة خاصة بسير العمل."
+                  />
+                </div>
+              ) : (
+                <video
+                  key={activeVideo.id}
+                  className="enterprise-video-player"
+                  controls
+                  preload="metadata"
+                  src={activeVideo.url}
+                  onPlay={handleVideoPlay}
+                >
+                  <AppText
+                    en="Your browser does not support embedded video."
+                    ar="المتصفح لا يدعم عرض الفيديو المدمج."
+                  />
+                </video>
+              )}
             </div>
-          ) : (
-            <video
-              key={activeVideo.id}
-              className="enterprise-video-player"
-              controls
-              preload="metadata"
-              src={activeVideo.url}
-              onPlay={handleVideoPlay}
-            >
-              <AppText
-                en="Your browser does not support embedded video."
-                ar="المتصفح لا يدعم عرض الفيديو المدمج."
-              />
-            </video>
-          )}
+            <div className="video-now-playing">
+              <AppText as="span" en="Now playing" ar="يعرض الآن" />
+              <strong>
+                <span className="lang-en">{activeVideo.labelEn}</span>
+                <span className="lang-ar">{activeVideo.labelAr}</span>
+              </strong>
+            </div>
+          </div>
+
+          <aside className="video-watch-sidebar" aria-label="Enterprise onboarding playlist">
+            <div className="video-playlist-header">
+              <AppText as="strong" en="Onboarding videos" ar="فيديوهات التأهيل" />
+              <AppText as="span" en="Choose a topic" ar="اختر موضوعًا" />
+            </div>
+
+            <div className="onboarding-video-tabs" role="tablist" aria-label="Enterprise onboarding videos">
+              {ENTERPRISE_ONBOARDING_VIDEO_TABS.map((video, index) => (
+                <button
+                  key={video.id}
+                  type="button"
+                  role="tab"
+                  aria-selected={activeVideo.id === video.id}
+                  className={`onboarding-video-tab ${activeVideo.id === video.id ? "active" : ""}`}
+                  onClick={() => setActiveVideoId(video.id)}
+                >
+                  <span className="video-tab-index">{index + 1}</span>
+                  <span className="video-tab-copy">
+                    <span className="lang-en">{video.labelEn}</span>
+                    <span className="lang-ar">{video.labelAr}</span>
+                  </span>
+                  <i className="ph ph-play-circle" />
+                </button>
+              ))}
+            </div>
+
+            <div className="enterprise-video-meta-grid">
+              <div className="enterprise-video-meta-cell">
+                <b>{remainingViews}</b>
+                <AppText as="span" en="Views left" ar="مشاهدات متبقية" />
+              </div>
+              <div className="enterprise-video-meta-cell">
+                <b>{ENTERPRISE_MAX_VIDEO_VIEWS}</b>
+                <AppText as="span" en="Allowed plays" ar="مرات التشغيل" />
+              </div>
+              <div className="enterprise-video-meta-cell">
+                <b>{isVideoLocked ? "LOCKED" : "OPEN"}</b>
+                <AppText as="span" en="Video access" ar="وصول الفيديو" />
+              </div>
+            </div>
+          </aside>
         </div>
       </section>
 
@@ -132,10 +155,17 @@ export default function EnterpriseOnboardingPage({ setPage, userEmail }) {
             ar="استخدم أداة جدولة المؤسسات للأسئلة الخاصة بالنماذج وعوائق سير العمل والتوضيحات بعد مشاهدة التسجيل. هذا لا يستخدم تقويم جلسات التأهيل القياسية."
           />
         </div>
-        <ExternalLink href={ENTERPRISE_AMA_SCHEDULER_URL} className="primary-action-btn">
-          <AppText en="Open meeting scheduler" ar="فتح أداة الجدولة" />
-          <i className="ph ph-calendar-check" />
-        </ExternalLink>
+        {canBookLiveQna ? (
+          <ExternalLink href={ENTERPRISE_AMA_SCHEDULER_URL} className="primary-action-btn">
+            <AppText en="Book live QnA Session" ar="حجز جلسة أسئلة مباشرة" />
+            <i className="ph ph-calendar-check" />
+          </ExternalLink>
+        ) : (
+          <button type="button" className="primary-action-btn" disabled>
+            <AppText en="Book live QnA Session" ar="حجز جلسة أسئلة مباشرة" />
+            <i className="ph ph-calendar-check" />
+          </button>
+        )}
       </div>
     </section>
   );

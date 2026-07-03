@@ -19,6 +19,7 @@ export default function StandardOnboardingPage({ openDrawer, setPage, userEmail 
   const usedViews = Math.min(videoViews, STANDARD_MAX_VIDEO_VIEWS);
   const remainingViews = Math.max(STANDARD_MAX_VIDEO_VIEWS - usedViews, 0);
   const isVideoLocked = remainingViews <= 0 && !hasCountedCurrentView;
+  const canBookLiveQna = usedViews > 0 || hasCountedCurrentView;
   const activeVideo = STANDARD_ONBOARDING_VIDEO_TABS.find((video) => video.id === activeVideoId) || STANDARD_ONBOARDING_VIDEO_TABS[0];
 
   function handleVideoPlay() {
@@ -39,7 +40,7 @@ export default function StandardOnboardingPage({ openDrawer, setPage, userEmail 
         </button>
       </div>
 
-      <section className="enterprise-video-card standard-video-card">
+      <section className="enterprise-video-card standard-video-card video-watch-page">
         <div className="enterprise-video-copy">
           <div className="roadmap-eyebrow">
             <i className="ph-fill ph-play-circle" />
@@ -57,67 +58,89 @@ export default function StandardOnboardingPage({ openDrawer, setPage, userEmail 
           />
         </div>
 
-        <div className="enterprise-video-meta-grid">
-          <div className="enterprise-video-meta-cell">
-            <b>{remainingViews}</b>
-            <AppText as="span" en="Views left" ar="مشاهدات متبقية" />
-          </div>
-          <div className="enterprise-video-meta-cell">
-            <b>{STANDARD_MAX_VIDEO_VIEWS}</b>
-            <AppText as="span" en="Allowed plays" ar="مرات التشغيل" />
-          </div>
-          <div className="enterprise-video-meta-cell">
-            <b>{isVideoLocked ? "LOCKED" : "OPEN"}</b>
-            <AppText as="span" en="Video access" ar="وصول الفيديو" />
-          </div>
-        </div>
-
-        <div className="onboarding-video-tabs" role="tablist" aria-label="Standard onboarding videos">
-          {STANDARD_ONBOARDING_VIDEO_TABS.map((video) => (
-            <button
-              key={video.id}
-              type="button"
-              role="tab"
-              aria-selected={activeVideo.id === video.id}
-              className={`onboarding-video-tab ${activeVideo.id === video.id ? "active" : ""}`}
-              onClick={() => setActiveVideoId(video.id)}
-            >
-              <span className="lang-en">{video.labelEn}</span>
-              <span className="lang-ar">{video.labelAr}</span>
-            </button>
-          ))}
-        </div>
-
-        <div className="enterprise-video-shell">
-          {isVideoLocked ? (
-            <div className="enterprise-video-locked">
-              <i className="ph ph-lock-key" />
-              <AppText
-                as="strong"
-                en="Video view limit reached"
-                ar="تم الوصول إلى حد المشاهدة"
-              />
-              <AppText
-                as="p"
-                en="Book a live onboarding session for follow-up guidance and workflow questions."
-                ar="احجز جلسة تأهيل مباشرة للحصول على إرشادات إضافية وأسئلة خاصة بسير العمل."
-              />
+        <div className="video-watch-layout">
+          <div className="video-watch-main">
+            <div className="enterprise-video-shell">
+              {isVideoLocked ? (
+                <div className="enterprise-video-locked">
+                  <i className="ph ph-lock-key" />
+                  <AppText
+                    as="strong"
+                    en="Video view limit reached"
+                    ar="تم الوصول إلى حد المشاهدة"
+                  />
+                  <AppText
+                    as="p"
+                    en="Book a live onboarding session for follow-up guidance and workflow questions."
+                    ar="احجز جلسة تأهيل مباشرة للحصول على إرشادات إضافية وأسئلة خاصة بسير العمل."
+                  />
+                </div>
+              ) : (
+                <video
+                  key={activeVideo.id}
+                  className="enterprise-video-player"
+                  controls
+                  preload="metadata"
+                  src={activeVideo.url}
+                  onPlay={handleVideoPlay}
+                >
+                  <AppText
+                    en="Your browser does not support embedded video."
+                    ar="المتصفح لا يدعم عرض الفيديو المدمج."
+                  />
+                </video>
+              )}
             </div>
-          ) : (
-            <video
-              key={activeVideo.id}
-              className="enterprise-video-player"
-              controls
-              preload="metadata"
-              src={activeVideo.url}
-              onPlay={handleVideoPlay}
-            >
-              <AppText
-                en="Your browser does not support embedded video."
-                ar="المتصفح لا يدعم عرض الفيديو المدمج."
-              />
-            </video>
-          )}
+            <div className="video-now-playing">
+              <AppText as="span" en="Now playing" ar="يعرض الآن" />
+              <strong>
+                <span className="lang-en">{activeVideo.labelEn}</span>
+                <span className="lang-ar">{activeVideo.labelAr}</span>
+              </strong>
+            </div>
+          </div>
+
+          <aside className="video-watch-sidebar" aria-label="Standard onboarding playlist">
+            <div className="video-playlist-header">
+              <AppText as="strong" en="Onboarding videos" ar="فيديوهات التأهيل" />
+              <AppText as="span" en="Choose a topic" ar="اختر موضوعًا" />
+            </div>
+
+            <div className="onboarding-video-tabs" role="tablist" aria-label="Standard onboarding videos">
+              {STANDARD_ONBOARDING_VIDEO_TABS.map((video, index) => (
+                <button
+                  key={video.id}
+                  type="button"
+                  role="tab"
+                  aria-selected={activeVideo.id === video.id}
+                  className={`onboarding-video-tab ${activeVideo.id === video.id ? "active" : ""}`}
+                  onClick={() => setActiveVideoId(video.id)}
+                >
+                  <span className="video-tab-index">{index + 1}</span>
+                  <span className="video-tab-copy">
+                    <span className="lang-en">{video.labelEn}</span>
+                    <span className="lang-ar">{video.labelAr}</span>
+                  </span>
+                  <i className="ph ph-play-circle" />
+                </button>
+              ))}
+            </div>
+
+            <div className="enterprise-video-meta-grid">
+              <div className="enterprise-video-meta-cell">
+                <b>{remainingViews}</b>
+                <AppText as="span" en="Views left" ar="مشاهدات متبقية" />
+              </div>
+              <div className="enterprise-video-meta-cell">
+                <b>{STANDARD_MAX_VIDEO_VIEWS}</b>
+                <AppText as="span" en="Allowed plays" ar="مرات التشغيل" />
+              </div>
+              <div className="enterprise-video-meta-cell">
+                <b>{isVideoLocked ? "LOCKED" : "OPEN"}</b>
+                <AppText as="span" en="Video access" ar="وصول الفيديو" />
+              </div>
+            </div>
+          </aside>
         </div>
       </section>
 
@@ -130,8 +153,13 @@ export default function StandardOnboardingPage({ openDrawer, setPage, userEmail 
             ar="اختر جلسة تأهيل قياسية بعد جاهزية الترخيص والوصول إلى البرنامج. هذه الجلسات مخصصة لمستخدمي الترخيص القياسي فقط."
           />
         </div>
-        <button type="button" className="primary-action-btn" onClick={() => openDrawer({ type: "schedule" })}>
-          <AppText en="Book onboarding session" ar="حجز جلسة التأهيل" />
+        <button
+          type="button"
+          className="primary-action-btn"
+          disabled={!canBookLiveQna}
+          onClick={() => openDrawer({ type: "schedule" })}
+        >
+          <AppText en="Book live QnA Session" ar="حجز جلسة أسئلة مباشرة" />
           <i className="ph ph-calendar-check" />
         </button>
       </div>
